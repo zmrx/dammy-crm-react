@@ -1,10 +1,17 @@
 import { createBrowserRouter } from "react-router";
 import { Dashboard } from "../layouts/Dashboard";
-import { PageHome } from "../pages/Home";
-import { ProductsList, ProductsDetail } from "../pages/products";
-import { UsersList, UsersDetail } from "../pages/users";
+import { PageHome } from "../pages/PageHome";
+import { PageError } from "../pages/PageError";
+import { PageProduct } from "../pages/PageProduct";
+import { PageProducts } from "../pages/PageProducts";
+import { PageUser } from "../pages/PageUser";
+import { PageUsers } from "../pages/PageUsers";
 
 export const router = createBrowserRouter([
+  {
+    path: "*",
+    element: <PageError />,
+  },
   {
     path: "/",
     Component: Dashboard,
@@ -15,13 +22,23 @@ export const router = createBrowserRouter([
       },
       {
         path: "/products",
-        Component: ProductsList,
-        children: [{ index: true, Component: ProductsDetail }],
+        children: [
+          { index: true, Component: PageProducts },
+          {
+            path: ":id",
+            Component: PageProduct,
+          },
+        ],
       },
       {
         path: "/users",
-        Component: UsersList,
-        children: [{ index: true, Component: UsersDetail }],
+        children: [
+          { index: true, Component: PageUsers },
+          {
+            path: ":id",
+            Component: PageUser,
+          },
+        ],
       },
     ],
   },

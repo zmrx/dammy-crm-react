@@ -1,0 +1,22 @@
+.ui-property-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.ui-property-list__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+}
+
+.ui-property-list__label {
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+.ui-property-list__value {
+  font-weight: 500;
+  text-align: right;
+}

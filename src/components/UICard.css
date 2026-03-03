@@ -1,0 +1,32 @@
+.ui-card {
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.ui-card__header {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.ui-card__title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.ui-card__content {
+  padding: var(--spacing-md);
+}
+
+/* Cards Grid */
+.ui-cards-grid {
+  display: grid;
+  gap: var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+  .ui-cards-grid--2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

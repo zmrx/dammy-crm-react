@@ -1,0 +1,49 @@
+/* Toast - BEM */
+.toast {
+  position: fixed;
+  bottom: var(--spacing-lg);
+  right: var(--spacing-lg);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  animation: toast-slide-in 200ms ease;
+}
+
+.toast--success {
+  border-color: var(--color-success);
+}
+
+.toast--error {
+  border-color: var(--color-error);
+}
+
+.toast__icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+.toast--success .toast__icon {
+  color: var(--color-success);
+}
+
+.toast--error .toast__icon {
+  color: var(--color-error);
+}
+
+@keyframes toast-slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

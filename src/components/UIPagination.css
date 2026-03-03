@@ -1,0 +1,22 @@
+.ui-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--spacing-md);
+}
+
+.ui-pagination__info {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.ui-pagination__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.ui-pagination__text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
