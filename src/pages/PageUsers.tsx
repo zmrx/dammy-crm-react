@@ -14,7 +14,7 @@ export const PageUsers = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [total, setTotal] = useState(0);
   const [skip, setSkip] = useState(0);
-  const limit = 10;
+  const limit = 15;
 
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
@@ -23,7 +23,10 @@ export const PageUsers = () => {
   const fetchUsers = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await getUsers(skip, limit, search);
+      const data = await getUsers({
+        skip,
+        limit,
+      });
       setUsers(data.users);
       setTotal(data.total);
     } catch (error) {
@@ -46,22 +49,21 @@ export const PageUsers = () => {
     {
       key: "id",
       header: "ID",
-      render: (user: User) => (
-        <span style={{ fontWeight: 500 }}>{user.id}</span>
-      ),
+      render: (user: User) => <span style={{ fontWeight: 500 }}>{user.id}</span>,
     },
     {
       key: "gender",
       header: "Пол",
-      render: (user: User) => (
-        <UIBadge>{user.gender === "male" ? "Муж" : "Жен"}</UIBadge>
-      ),
+      render: (user: User) => <UIBadge>{user.gender === "male" ? "Муж" : "Жен"}</UIBadge>,
     },
     {
       key: "username",
       header: "Username",
       render: (user: User) => (
-        <Link to={`/users/${user.id}`} className="table__link">
+        <Link
+          to={`/users/${user.id}`}
+          className="table__link"
+        >
           {user.username}
         </Link>
       ),
@@ -69,9 +71,7 @@ export const PageUsers = () => {
     {
       key: "role",
       header: "Роль",
-      render: (user: User) => (
-        <span style={{ textTransform: "capitalize" }}>{user.role}</span>
-      ),
+      render: (user: User) => <span style={{ textTransform: "capitalize" }}>{user.role}</span>,
     },
   ];
 
@@ -86,7 +86,6 @@ export const PageUsers = () => {
           <Search className="page-users__search-icon" />
 
           <UIInput
-            hasIcon
             placeholder="Поиск пользователей..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
@@ -94,8 +93,15 @@ export const PageUsers = () => {
           />
         </div>
 
-        <UIButton variant="primary" onClick={handleSearch}>
-          <Search width={16} height={16} className="ui-button__icon" />
+        <UIButton
+          variant="primary"
+          onClick={handleSearch}
+        >
+          <Search
+            width={16}
+            height={16}
+            className="ui-button__icon"
+          />
           Найти
         </UIButton>
       </div>

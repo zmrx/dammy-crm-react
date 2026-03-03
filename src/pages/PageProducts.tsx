@@ -13,7 +13,7 @@ export const PageProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [total, setTotal] = useState(0);
   const [skip, setSkip] = useState(0);
-  const limit = 10;
+  const limit = 15;
 
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
@@ -49,15 +49,16 @@ export const PageProducts = () => {
       key: "id",
       header: "ID",
       className: "",
-      render: (product: Product) => (
-        <span style={{ fontWeight: 500 }}>{product.id}</span>
-      ),
+      render: (product: Product) => <span style={{ fontWeight: 500 }}>{product.id}</span>,
     },
     {
       key: "title",
       header: "Название",
       render: (product: Product) => (
-        <Link to={`/products/${product.id}`} className="table__link">
+        <Link
+          to={`/products/${product.id}`}
+          className="table__link"
+        >
           {product.title}
         </Link>
       ),
@@ -91,17 +92,23 @@ export const PageProducts = () => {
 
       <div className="page-products__search-form">
         <div className="page-products__search-wrapper">
-          <Search className="page-products__search-icon" />
           <UIInput
-            hasIcon
+            icon={<Search />}
             placeholder="Поиск продуктов..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           />
         </div>
-        <UIButton variant="primary" onClick={handleSearch}>
-          <Search width={16} height={16} className="ui-button__icon" />
+        <UIButton
+          variant="primary"
+          onClick={handleSearch}
+        >
+          <Search
+            width={16}
+            height={16}
+            className="ui-button__icon"
+          />
           Найти
         </UIButton>
       </div>

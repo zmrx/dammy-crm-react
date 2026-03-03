@@ -1,21 +1,32 @@
 import type { User } from "../types";
 import type { UsersResponse } from "./types";
 
-const BASE_URL = "https://dummyjson.com";
+const BASE_URL = "https://dummyjson.com/users";
+
+export interface UserQueryParams {
+  limit?: number;
+  skip?: number;
+  select?: string;
+  sortBy?: string;
+  order?: "asc" | "desc";
+  [key: string]: unknown;
+}
+
+function buildUserQueryString(params: UserQueryParams): string {
+  const searchParams = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      searchParams.append(key, String(value));
+    }
+  });
+  return searchParams.toString();
+}
 
 export async function getUsers(
-  page: number = 1,
-  limit: number = 10,
-  search: string = "",
+  params: UserQueryParams
 ): Promise<UsersResponse> {
-  const skip = (page - 1) * limit;
-
-  let url: string;
-  if (search) {
-    url = `${BASE_URL}/users/search?q=${encodeURIComponent(search)}&limit=${limit}&skip=${skip}`;
-  } else {
-    url = `${BASE_URL}/users?limit=${limit}&skip=${skip}`;
-  }
+  const queryString = params ? buildUserQueryString(params) : "";
+  const url = queryString ? `${BASE_URL}?${queryString}` : BASE_URL;
 
   const response = await fetch(url);
   if (!response.ok) {
@@ -25,9 +36,11 @@ export async function getUsers(
 }
 
 export async function getUser(id: number): Promise<User> {
-  const response = await fetch(`${BASE_URL}/users/${id}`);
+  const url = `${BASE_URL}/users/${id}`;
+
+  const response = await fetch(url);
   if (!response.ok) {
-    throw new Error("Failed to fetch user");
+    throw new Error(`Failed to fetch user ${id}: ${response.status}`);
   }
   return response.json();
 }
