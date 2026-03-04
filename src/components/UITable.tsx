@@ -1,6 +1,8 @@
 import { type ReactNode } from "react";
 import "./UITable.css";
 import "./UISpinner.css";
+import { UISpinner } from "./UISpinner";
+import clsx from "clsx";
 
 interface Column<T> {
   key: string;
@@ -17,20 +19,23 @@ interface TableProps<T> {
   emptyMessage?: string;
 }
 
-export function UITable<T>({
+export const UITable = <T extends object>({
   columns,
   data,
   keyExtractor,
   loading,
   emptyMessage = "Нет данных",
-}: TableProps<T>) {
+}: TableProps<T>) => {
   return (
-    <div className="ui-table-wrapper">
-      <table className="ui-table">
+    <div className="ui-table">
+      <table className="ui-table__table">
         <thead>
-          <tr>
+          <tr className="ui-table__tr">
             {columns.map((col) => (
-              <th key={col.key} className={col.className}>
+              <th
+                key={col.key}
+                className={clsx("ui-table__th", col.className)}
+              >
                 {col.header}
               </th>
             ))}
@@ -39,29 +44,37 @@ export function UITable<T>({
 
         <tbody>
           {loading ? (
-            <tr>
-              <td colSpan={columns.length} className="ui-table__center">
-                <div className="ui-loading">
-                  <div className="ui-spinner" />
-                </div>
+            <tr className="ui-table__tr">
+              <td
+                colSpan={columns.length}
+                className="ui-table__td ui-table__center ui-table__loader"
+              >
+                <UISpinner />
               </td>
             </tr>
           ) : data.length === 0 ? (
-            <tr>
-              <td colSpan={columns.length} className="ui-table__center">
+            <tr className="ui-table__tr">
+              <td
+                colSpan={columns.length}
+                className="ui-table__td ui-table__center"
+              >
                 {emptyMessage}
               </td>
             </tr>
           ) : (
             data.map((item) => (
-              <tr key={keyExtractor(item)}>
+              <tr
+                key={keyExtractor(item)}
+                className="ui-table__tr"
+              >
                 {columns.map((col) => (
-                  <td key={col.key} className={col.className}>
+                  <td
+                    key={col.key}
+                    className={clsx("ui-table__td", col.className)}
+                  >
                     {col.render
                       ? col.render(item)
-                      : ((item as Record<string, unknown>)[
-                          col.key
-                        ] as ReactNode)}
+                      : ((item as Record<string, unknown>)[col.key] as ReactNode)}
                   </td>
                 ))}
               </tr>
@@ -71,4 +84,4 @@ export function UITable<T>({
       </table>
     </div>
   );
-}
+};
