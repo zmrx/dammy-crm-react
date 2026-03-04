@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { Search } from "lucide-react";
 import { getProducts } from "../api";
 import type { Product } from "../types";
-import { UITable } from "../components/UITable";
+import { UITable, type SortConfig } from "../components/UITable";
 import { UIPagination } from "../components/UIPagination";
 import { UIInput } from "../components/UIInput";
 import { UIButton } from "../components/UIButton";
@@ -18,6 +18,7 @@ export const PageProducts = () => {
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [loading, setLoading] = useState(true);
+  const [sortConfig, setSortConfig] = useState<SortConfig | undefined>();
 
   const fetchProducts = useCallback(async () => {
     setLoading(true);
@@ -25,6 +26,8 @@ export const PageProducts = () => {
       const data = await getProducts({
         limit,
         skip,
+        sortBy: sortConfig?.key,
+        order: sortConfig?.direction,
       });
       setProducts(data.products);
       setTotal(data.total);
@@ -33,7 +36,7 @@ export const PageProducts = () => {
     } finally {
       setLoading(false);
     }
-  }, [skip, search]);
+  }, [skip, search, sortConfig]);
 
   useEffect(() => {
     fetchProducts();
@@ -44,16 +47,23 @@ export const PageProducts = () => {
     setSearch(searchInput);
   };
 
+  const handleSort = (config: SortConfig) => {
+    setSortConfig(config);
+    setSkip(0);
+  };
+
   const columns = [
     {
       key: "id",
       header: "ID",
       className: "",
+      sortable: true,
       render: (product: Product) => <span style={{ fontWeight: 500 }}>{product.id}</span>,
     },
     {
       key: "title",
       header: "Название",
+      sortable: true,
       render: (product: Product) => (
         <Link
           to={`/products/${product.id}`}
@@ -66,6 +76,7 @@ export const PageProducts = () => {
     {
       key: "category",
       header: "Категория",
+      sortable: true,
       render: (product: Product) => (
         <span style={{ textTransform: "capitalize" }}>{product.category}</span>
       ),
@@ -74,12 +85,14 @@ export const PageProducts = () => {
       key: "price",
       header: "Цена",
       className: "table__text-right",
+      sortable: true,
       render: (product: Product) => `$${product.price}`,
     },
     {
       key: "stock",
       header: "Остаток",
       className: "table__text-right",
+      sortable: true,
       render: (product: Product) => product.stock,
     },
   ];
@@ -117,6 +130,8 @@ export const PageProducts = () => {
         keyExtractor={(product) => product.id}
         loading={loading}
         emptyMessage="Продукты не найдены"
+        sortConfig={sortConfig}
+        onSortChange={handleSort}
       />
 
       {!loading && (

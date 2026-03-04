@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { Search } from "lucide-react";
 import { getUsers } from "../api";
 import type { User } from "../types";
-import { UITable } from "../components/UITable";
+import { UITable, type SortConfig } from "../components/UITable";
 import { UIPagination } from "../components/UIPagination";
 import { UIInput } from "../components/UIInput";
 import { UIButton } from "../components/UIButton";
@@ -18,6 +18,7 @@ export const PageUsers = () => {
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [loading, setLoading] = useState(true);
+  const [sortConfig, setSortConfig] = useState<SortConfig | undefined>();
 
   const fetchUsers = useCallback(async () => {
     setLoading(true);
@@ -25,6 +26,8 @@ export const PageUsers = () => {
       const data = await getUsers({
         skip,
         limit,
+        sortBy: sortConfig?.key,
+        order: sortConfig?.direction,
       });
       setUsers(data.users);
       setTotal(data.total);
@@ -33,7 +36,7 @@ export const PageUsers = () => {
     } finally {
       setLoading(false);
     }
-  }, [skip, search]);
+  }, [skip, search, sortConfig]);
 
   useEffect(() => {
     fetchUsers();
@@ -44,19 +47,26 @@ export const PageUsers = () => {
     setSearch(searchInput);
   };
 
+  const handleSort = (config: SortConfig) => {
+    setSortConfig(config);
+    setSkip(0);
+  };
+
   const columns = [
     {
       key: "id",
       header: "ID",
+      sortable: true,
       render: (user: User) => <span style={{ fontWeight: 500 }}>{user.id}</span>,
     },
     {
       key: "username",
       header: "Username",
+      sortable: true,
       render: (user: User) => (
         <Link
           to={`/users/${user.id}`}
-          className="table__link"
+          // className="table__link"
         >
           {user.username}
         </Link>
@@ -65,6 +75,7 @@ export const PageUsers = () => {
     {
       key: "role",
       header: "Роль",
+      sortable: true,
       render: (user: User) => <span style={{ textTransform: "capitalize" }}>{user.role}</span>,
     },
   ];
@@ -102,6 +113,8 @@ export const PageUsers = () => {
         keyExtractor={(user) => user.id}
         loading={loading}
         emptyMessage="Пользователи не найдены"
+        sortConfig={sortConfig}
+        onSortChange={handleSort}
       />
 
       {!loading && (
