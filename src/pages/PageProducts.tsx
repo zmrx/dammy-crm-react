@@ -64,14 +64,7 @@ export const PageProducts = () => {
       key: "title",
       header: "Название",
       sortable: true,
-      render: (product: Product) => (
-        <Link
-          to={`/products/${product.id}`}
-          className="table__link"
-        >
-          {product.title}
-        </Link>
-      ),
+      render: (product: Product) => <Link to={`/products/${product.id}`}>{product.title}</Link>,
     },
     {
       key: "category",
