@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router";
-import { ArrowLeft, Edit, Check, X } from "lucide-react";
-import { getUser, updateUser } from "../api/users";
+import { ArrowLeft, Edit } from "lucide-react";
+import { getUser } from "../api/users";
 import type { User } from "../types";
 import { UIModal } from "../components/UIModal";
 import {
@@ -16,8 +16,9 @@ import { UIBadge } from "../components/UIBadge";
 import { UIAvatar } from "../components/UIAvatar";
 import { UISpinner } from "../components/UISpinner";
 import { useToast } from "../providers/toast";
-import { UIFormGrid, UIInput } from "../components/UIInput";
+
 import { UIButton } from "../components/UIButton";
+import { UserFormEdit } from "../components/UserFormEdit";
 import "./PageUser.css";
 
 export const PageUser = () => {
@@ -25,9 +26,17 @@ export const PageUser = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [editModalOpen, setEditModalOpen] = useState(false);
-  const [editData, setEditData] = useState<Partial<User>>({});
-  const [saving, setSaving] = useState(false);
   const { showToast } = useToast();
+
+  const onUserEditSucces = (newUser: User) => {
+    setEditModalOpen(false)
+    setUser(newUser);
+    showToast("Пользователь успешно обновлен", "success");
+  };
+
+  const onUserEditError = () => {
+    showToast("Ошибка при обновлении пользователя", "error");
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -35,7 +44,6 @@ export const PageUser = () => {
       try {
         const data = await getUser(Number(id));
         setUser(data);
-        setEditData(data);
       } catch (error) {
         console.error("Failed to fetch user:", error);
       } finally {
@@ -44,21 +52,6 @@ export const PageUser = () => {
     };
     fetchUser();
   }, [id]);
-
-  const handleSave = async () => {
-    if (!user) return;
-    setSaving(true);
-    try {
-      await updateUser(user.id, editData);
-      setUser({ ...user, ...editData });
-      setEditModalOpen(false);
-      showToast("Пользователь успешно обновлен", "success");
-    } catch {
-      showToast("Ошибка при обновлении пользователя", "error");
-    } finally {
-      setSaving(false);
-    }
-  };
 
   if (loading) {
     return (
@@ -79,7 +72,11 @@ export const PageUser = () => {
   return (
     <div className="page-user">
       <div className="page-user__header">
-        <Link to="/users" className="page-user__back-btn" aria-label="Назад">
+        <Link
+          to="/users"
+          className="page-user__back-btn"
+          aria-label="Назад"
+        >
           <ArrowLeft className="page-user__back-icon" />
         </Link>
         <div className="page-user__info">
@@ -101,7 +98,11 @@ export const PageUser = () => {
             size="sm"
             onClick={() => setEditModalOpen(true)}
           >
-            <Edit width={16} height={16} className="ui-button__icon" />
+            <Edit
+              width={16}
+              height={16}
+              className="ui-button__icon"
+            />
             Редактировать
           </UIButton>
         </div>
@@ -123,21 +124,13 @@ export const PageUser = () => {
                 { label: "Username", value: user.username },
                 {
                   label: "Пол",
-                  value: (
-                    <UIBadge>
-                      {user.gender === "male" ? "Мужской" : "Женский"}
-                    </UIBadge>
-                  ),
+                  value: <UIBadge>{user.gender === "male" ? "Мужской" : "Женский"}</UIBadge>,
                 },
                 { label: "Возраст", value: user.age },
                 { label: "Дата рождения", value: user.birthDate },
                 {
                   label: "Роль",
-                  value: (
-                    <span style={{ textTransform: "capitalize" }}>
-                      {user.role}
-                    </span>
-                  ),
+                  value: <span style={{ textTransform: "capitalize" }}>{user.role}</span>,
                 },
               ]}
             />
@@ -172,11 +165,7 @@ export const PageUser = () => {
                 { label: "Группа крови", value: user.bloodGroup },
                 {
                   label: "Цвет глаз",
-                  value: (
-                    <span style={{ textTransform: "capitalize" }}>
-                      {user.eyeColor}
-                    </span>
-                  ),
+                  value: <span style={{ textTransform: "capitalize" }}>{user.eyeColor}</span>,
                 },
                 {
                   label: "Волосы",
@@ -220,9 +209,7 @@ export const PageUser = () => {
             <UICardTitle>Образование</UICardTitle>
           </UICardHeader>
           <UICardContent>
-            <UIPropertyList
-              items={[{ label: "Университет", value: user.university }]}
-            />
+            <UIPropertyList items={[{ label: "Университет", value: user.university }]} />
           </UICardContent>
         </UICard>
 
@@ -245,6 +232,7 @@ export const PageUser = () => {
           <UICardHeader>
             <UICardTitle>Банк</UICardTitle>
           </UICardHeader>
+
           <UICardContent>
             <UIPropertyList
               items={[
@@ -291,115 +279,13 @@ export const PageUser = () => {
         isOpen={editModalOpen}
         onClose={() => setEditModalOpen(false)}
         title="Редактирование пользователя"
-        footer={
-          <>
-            <UIButton
-              variant={'outline'}
-              onClick={() => setEditModalOpen(false)}
-            >
-              <X width={16} height={16} className="button__icon" />
-              Отмена
-            </UIButton>
-
-            <UIButton
-              className="button button--primary"
-              onClick={handleSave}
-              disabled={saving}
-            >
-              {saving ? (
-                <UISpinner size="sm" />
-              ) : (
-                <Check width={16} height={16} className="button__icon" />
-              )}
-              Сохранить
-            </UIButton>
-          </>
-        }
       >
-        <UIFormGrid columns={2}>
-          <UIInput
-            label="Имя"
-            value={editData.firstName || ""}
-            onChange={(e) =>
-              setEditData({ ...editData, firstName: e.target.value })
-            }
-          />
-          <UIInput
-            label="Фамилия"
-            value={editData.lastName || ""}
-            onChange={(e) =>
-              setEditData({ ...editData, lastName: e.target.value })
-            }
-          />
-        </UIFormGrid>
-
-        <UIFormGrid columns={2}>
-          <UIInput
-            label="Username"
-            value={editData.username || ""}
-            onChange={(e) =>
-              setEditData({ ...editData, username: e.target.value })
-            }
-          />
-          <UIInput
-            label="Email"
-            type="email"
-            value={editData.email || ""}
-            onChange={(e) =>
-              setEditData({ ...editData, email: e.target.value })
-            }
-          />
-        </UIFormGrid>
-
-        <UIFormGrid columns={2}>
-          <UIInput
-            label="Телефон"
-            value={editData.phone || ""}
-            onChange={(e) =>
-              setEditData({ ...editData, phone: e.target.value })
-            }
-          />
-          <UIInput
-            label="Дата рождения"
-            value={editData.birthDate || ""}
-            onChange={(e) =>
-              setEditData({ ...editData, birthDate: e.target.value })
-            }
-          />
-        </UIFormGrid>
-
-        <UIFormGrid columns={2}>
-          <UIInput
-            label="Пол"
-            value={editData.gender || ""}
-            onChange={(e) =>
-              setEditData({ ...editData, gender: e.target.value })
-            }
-          />
-          <UIInput
-            label="Роль"
-            value={editData.role || ""}
-            onChange={(e) => setEditData({ ...editData, role: e.target.value })}
-          />
-        </UIFormGrid>
-
-        <UIFormGrid columns={2}>
-          <UIInput
-            label="Возраст"
-            type="number"
-            value={editData.age || ""}
-            onChange={(e) =>
-              setEditData({ ...editData, age: Number(e.target.value) })
-            }
-          />
-          <UIInput
-            label="Университет"
-            value={editData.university || ""}
-            onChange={(e) =>
-              setEditData({ ...editData, university: e.target.value })
-            }
-          />
-        </UIFormGrid>
+        <UserFormEdit
+          user={user}
+          onSucces={onUserEditSucces}
+          onError={onUserEditError}
+          onReject={() => setEditModalOpen(false)}
+        />
       </UIModal>
     </div>
   );

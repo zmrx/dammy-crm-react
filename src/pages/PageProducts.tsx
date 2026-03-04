@@ -91,15 +91,13 @@ export const PageProducts = () => {
       </div>
 
       <div className="page-products__search-form">
-        <div className="page-products__search-wrapper">
-          <UIInput
-            icon={<Search />}
-            placeholder="Поиск продуктов..."
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-          />
-        </div>
+        <UIInput
+          placeholder="Поиск продуктов..."
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+        />
+
         <UIButton
           variant="primary"
           onClick={handleSearch}

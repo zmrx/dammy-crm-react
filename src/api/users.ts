@@ -36,7 +36,7 @@ export async function getUsers(
 }
 
 export async function getUser(id: number): Promise<User> {
-  const url = `${BASE_URL}/users/${id}`;
+  const url = `${BASE_URL}/${id}`;
 
   const response = await fetch(url);
   if (!response.ok) {
@@ -46,7 +46,7 @@ export async function getUser(id: number): Promise<User> {
 }
 
 export async function updateUser(id: number, data: Partial<User>): Promise<User> {
-  const response = await fetch(`${BASE_URL}/users/${id}`, {
+  const response = await fetch(`${BASE_URL}/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),

@@ -7,7 +7,7 @@ interface AvatarProps {
   size?: "sm" | "md" | "lg";
 }
 
-export function UIAvatar({ src, alt, fallback, size = "md" }: AvatarProps) {
+export const UIAvatar =({ src, alt, fallback, size = "md" }: AvatarProps) => {
   return (
     <div className={`ui-avatar ui-avatar--${size}`}>
       {src ? <img src={src} alt={alt} className="ui-avatar__image" /> : fallback}

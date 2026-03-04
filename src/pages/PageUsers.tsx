@@ -5,7 +5,6 @@ import { getUsers } from "../api";
 import type { User } from "../types";
 import { UITable } from "../components/UITable";
 import { UIPagination } from "../components/UIPagination";
-import { UIBadge } from "../components/UIBadge";
 import { UIInput } from "../components/UIInput";
 import { UIButton } from "../components/UIButton";
 import "./PageUsers.css";
@@ -52,11 +51,6 @@ export const PageUsers = () => {
       render: (user: User) => <span style={{ fontWeight: 500 }}>{user.id}</span>,
     },
     {
-      key: "gender",
-      header: "Пол",
-      render: (user: User) => <UIBadge>{user.gender === "male" ? "Муж" : "Жен"}</UIBadge>,
-    },
-    {
       key: "username",
       header: "Username",
       render: (user: User) => (
@@ -82,16 +76,12 @@ export const PageUsers = () => {
       </div>
 
       <div className="page-users__search-form">
-        <div className="page-users__search-wrapper">
-          <Search className="page-users__search-icon" />
-
-          <UIInput
-            placeholder="Поиск пользователей..."
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-          />
-        </div>
+        <UIInput
+          placeholder="Поиск пользователей..."
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+        />
 
         <UIButton
           variant="primary"

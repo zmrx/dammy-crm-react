@@ -6,6 +6,6 @@ interface BadgeProps {
   variant?: "outline";
 }
 
-export function UIBadge({ children, variant = "outline" }: BadgeProps) {
+export const UIBadge = ({ children, variant = "outline" }: BadgeProps) => {
   return <span className={`ui-badge ui-badge--${variant}`}>{children}</span>;
 }

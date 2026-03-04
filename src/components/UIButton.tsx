@@ -7,13 +7,13 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
 }
 
-export function UIButton({
+export const UIButton = ({
   variant = "primary",
   size = "default",
   className = "",
   children,
   ...props
-}: ButtonProps) {
+}: ButtonProps) => {
   const classes = [
     "ui-button",
     variant !== "primary" && `ui-button--${variant}`,
@@ -24,8 +24,11 @@ export function UIButton({
     .join(" ");
 
   return (
-    <button className={classes} {...props}>
+    <button
+      className={classes}
+      {...props}
+    >
       {children}
     </button>
   );
-}
+};

@@ -5,18 +5,12 @@ import "./UIModal.css";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  title: string;
+  title?: string;
   children: ReactNode;
   footer?: ReactNode;
 }
 
-export function UIModal({
-  isOpen,
-  onClose,
-  title,
-  children,
-  footer,
-}: ModalProps) {
+export function UIModal({ isOpen, onClose, title, children, footer }: ModalProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -45,14 +39,17 @@ export function UIModal({
     >
       <div className="ui-modal">
         <div className="ui-modal__header">
-          <h2 className="ui-modal__title">{title}</h2>
+          {title && <h2 className="ui-modal__title">{title}</h2>}
 
           <button
             className="ui-modal__close"
             onClick={onClose}
             aria-label="Закрыть"
           >
-            <X width={20} height={20} />
+            <X
+              width={20}
+              height={20}
+            />
           </button>
         </div>
 

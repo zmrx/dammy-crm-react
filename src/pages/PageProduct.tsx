@@ -15,9 +15,12 @@ import {
 import { UIPropertyList } from "../components/UIPropertyList";
 import { UISpinner } from "../components/UISpinner";
 import { useToast } from "../providers/toast";
-import { UIFormGrid, UIInput, UITextarea } from "../components/UIInput";
+import { UIFormGrid } from "../components/UIFormGrid";
+import { UIInput } from "../components/UIInput";
+import { UITextarea } from "../components/UITextarea";
 import { UIButton } from "../components/UIButton";
 import "./PageProduct.css";
+import { UIInputLabel } from "../components/UIInputLabel";
 
 export function PageProduct() {
   const { id } = useParams();
@@ -92,7 +95,11 @@ export function PageProduct() {
             size="sm"
             onClick={() => setEditModalOpen(true)}
           >
-            <Edit width={16} height={16} className="ui-button__icon" />
+            <Edit
+              width={16}
+              height={16}
+              className="ui-button__icon"
+            />
             Редактировать
           </UIButton>
         </div>
@@ -101,7 +108,10 @@ export function PageProduct() {
       {/* Gallery */}
       <UICard className="page-product__gallery">
         <UICardContent>
-          <UIGallery images={product.images} title={product.title} />
+          <UIGallery
+            images={product.images}
+            title={product.title}
+          />
         </UICardContent>
       </UICard>
 
@@ -119,11 +129,7 @@ export function PageProduct() {
                 { label: "Название", value: product.title },
                 {
                   label: "Категория",
-                  value: (
-                    <span style={{ textTransform: "capitalize" }}>
-                      {product.category}
-                    </span>
-                  ),
+                  value: <span style={{ textTransform: "capitalize" }}>{product.category}</span>,
                 },
                 { label: "Бренд", value: product.brand || "-" },
                 { label: "SKU", value: product.sku },
@@ -192,15 +198,16 @@ export function PageProduct() {
           </UICardHeader>
           <UICardContent>
             {product.reviews.map((review, index) => (
-              <div key={index} className="review">
+              <div
+                key={index}
+                className="review"
+              >
                 <div className="review__header">
                   <span className="review__author">{review.reviewerName}</span>
                   <span className="review__rating">⭐ {review.rating}/5</span>
                 </div>
                 <p className="review__text">{review.comment}</p>
-                <p className="review__date">
-                  {new Date(review.date).toLocaleDateString("ru-RU")}
-                </p>
+                <p className="review__date">{new Date(review.date).toLocaleDateString("ru-RU")}</p>
               </div>
             ))}
           </UICardContent>
@@ -218,7 +225,11 @@ export function PageProduct() {
               variant="outline"
               onClick={() => setEditModalOpen(false)}
             >
-              <X width={16} height={16} className="ui-button__icon" />
+              <X
+                width={16}
+                height={16}
+                className="ui-button__icon"
+              />
               Отмена
             </UIButton>
             <UIButton
@@ -229,7 +240,11 @@ export function PageProduct() {
               {saving ? (
                 <UISpinner size="sm" />
               ) : (
-                <Check width={16} height={16} className="ui-button__icon" />
+                <Check
+                  width={16}
+                  height={16}
+                  className="ui-button__icon"
+                />
               )}
               Сохранить
             </UIButton>
@@ -240,34 +255,27 @@ export function PageProduct() {
           <UIInput
             label="Название"
             value={editData.title || ""}
-            onChange={(e) =>
-              setEditData({ ...editData, title: e.target.value })
-            }
+            onChange={(e) => setEditData({ ...editData, title: e.target.value })}
           />
           <UIInput
             label="Категория"
             value={editData.category || ""}
-            onChange={(e) =>
-              setEditData({ ...editData, category: e.target.value })
-            }
+            onChange={(e) => setEditData({ ...editData, category: e.target.value })}
           />
         </UIFormGrid>
-        <UITextarea
-          label="Описание"
-          value={editData.description || ""}
-          onChange={(e) =>
-            setEditData({ ...editData, description: e.target.value })
-          }
-          rows={3}
-        />
+        <UIInputLabel label="Описание">
+          <UITextarea
+            value={editData.description || ""}
+            onChange={(e) => setEditData({ ...editData, description: e.target.value })}
+            rows={3}
+          />
+        </UIInputLabel>
         <UIFormGrid columns={3}>
           <UIInput
             label="Цена"
             type="number"
             value={editData.price || ""}
-            onChange={(e) =>
-              setEditData({ ...editData, price: Number(e.target.value) })
-            }
+            onChange={(e) => setEditData({ ...editData, price: Number(e.target.value) })}
           />
           <UIInput
             label="Скидка %"
@@ -284,18 +292,14 @@ export function PageProduct() {
             label="Остаток"
             type="number"
             value={editData.stock || ""}
-            onChange={(e) =>
-              setEditData({ ...editData, stock: Number(e.target.value) })
-            }
+            onChange={(e) => setEditData({ ...editData, stock: Number(e.target.value) })}
           />
         </UIFormGrid>
         <UIFormGrid columns={2}>
           <UIInput
             label="Бренд"
             value={editData.brand || ""}
-            onChange={(e) =>
-              setEditData({ ...editData, brand: e.target.value })
-            }
+            onChange={(e) => setEditData({ ...editData, brand: e.target.value })}
           />
           <UIInput
             label="SKU"
@@ -306,23 +310,17 @@ export function PageProduct() {
         <UIInput
           label="Гарантия"
           value={editData.warrantyInformation || ""}
-          onChange={(e) =>
-            setEditData({ ...editData, warrantyInformation: e.target.value })
-          }
+          onChange={(e) => setEditData({ ...editData, warrantyInformation: e.target.value })}
         />
         <UIInput
           label="Доставка"
           value={editData.shippingInformation || ""}
-          onChange={(e) =>
-            setEditData({ ...editData, shippingInformation: e.target.value })
-          }
+          onChange={(e) => setEditData({ ...editData, shippingInformation: e.target.value })}
         />
         <UIInput
           label="Политика возврата"
           value={editData.returnPolicy || ""}
-          onChange={(e) =>
-            setEditData({ ...editData, returnPolicy: e.target.value })
-          }
+          onChange={(e) => setEditData({ ...editData, returnPolicy: e.target.value })}
         />
       </UIModal>
     </div>

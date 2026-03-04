@@ -1,6 +1,7 @@
-.ui-input {
+.ui-textarea {
   display: block;
   width: 100%;
+  min-height: 5rem;
   padding: var(--spacing-sm) var(--spacing-md);
   font-size: var(--font-size-sm);
   line-height: 1.5;
@@ -8,15 +9,12 @@
   background-color: var(--color-bg-primary);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
+  resize: vertical;
   transition: all var(--transition-fast);
 }
 
-.ui-input:focus {
+.ui-textarea:focus {
   outline: none;
   border-color: var(--color-accent);
   box-shadow: 0 0 0 3px rgba(55, 65, 81, 0.1);
-}
-
-.ui-input::placeholder {
-  color: var(--color-text-muted);
 }

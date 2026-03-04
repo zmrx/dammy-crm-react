@@ -1,0 +1,26 @@
+.ui-form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.ui-form-grid {
+  display: grid;
+  gap: var(--spacing-md);
+}
+
+.ui-form-grid--2 {
+  grid-template-columns: 1fr;
+}
+
+.ui-form-grid--3 {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .ui-form-grid--2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ui-form-grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
