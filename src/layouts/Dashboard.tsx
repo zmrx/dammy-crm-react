@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router";
-import { Package, Users, Home, Menu, X, Sun, Moon } from "lucide-react";
+import { Package, Users, Home, Menu } from "lucide-react";
 import "./Dashboard.css";
-import { useTheme } from "../providers/theme";
+import { AppSidebar } from "../components/AppSidebar";
+import { ThemeToggleButton } from "../components/ThemeToggleButton";
 
 const navigation = [
   { name: "Главная", href: "/", icon: Home },
@@ -13,11 +14,6 @@ const navigation = [
 export const Dashboard = () => {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
-
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
 
   const isActive = (href: string) => {
     if (href === "/") return location.pathname === "/";
@@ -25,11 +21,10 @@ export const Dashboard = () => {
   };
 
   return (
-    <div className="layout">
-      {/* Mobile Header */}
-      <header className="header">
+    <div className="layout-dashboard">
+      <header className="layout-dashboard__header">
         <button
-          className="header__menu-btn"
+          className="layout-dashboard__menu-btn"
           onClick={() => setSidebarOpen(true)}
           aria-label="Открыть меню"
         >
@@ -38,25 +33,8 @@ export const Dashboard = () => {
             height={20}
           />
         </button>
-        <span className="header__title">CRM</span>
-        <div className="header__actions">
-          <button
-            className="theme-toggle"
-            onClick={toggleTheme}
-            aria-label="Переключить тему"
-          >
-            {theme === "dark" ? (
-              <Sun className="theme-toggle__icon" />
-            ) : (
-              <Moon className="theme-toggle__icon" />
-            )}
-          </button>
-        </div>
-      </header>
 
-      {/* Sidebar */}
-      <aside className={`sidebar ${sidebarOpen ? "sidebar--open" : ""}`}>
-        <div className="sidebar__header">
+        <div className="layout-dashboard__logo">
           <Link
             to="/"
             className="sidebar__logo"
@@ -65,63 +43,39 @@ export const Dashboard = () => {
             <Package className="sidebar__logo-icon" />
             <span>CRM</span>
           </Link>
-          <button
-            className="sidebar__close"
-            onClick={() => setSidebarOpen(false)}
-            aria-label="Закрыть меню"
-          >
-            <X
-              width={20}
-              height={20}
-            />
-          </button>
         </div>
 
-        <nav className="sidebar__nav">
-          <ul className="sidebar__nav-list">
+        <div className="layout-dashboard__header-actions">
+          <ThemeToggleButton />
+        </div>
+      </header>
+
+      <AppSidebar
+        isOpen={sidebarOpen}
+        onClose={setSidebarOpen}
+      >
+        <nav className="layout-dashboard__nav">
+          <ul className="layout-dashboard__nav-list">
             {navigation.map((item) => (
               <li
                 key={item.name}
-                className="sidebar__nav-item"
+                className="layout-dashboard__nav-item"
               >
                 <Link
                   to={item.href}
-                  className={`sidebar__nav-link ${isActive(item.href) ? "sidebar__nav-link--active" : ""}`}
+                  className={`layout-dashboard__nav-link ${isActive(item.href) ? "layout-dashboard__nav-link--active" : ""}`}
                   onClick={() => setSidebarOpen(false)}
                 >
-                  <item.icon className="sidebar__nav-icon" />
+                  <item.icon className="layout-dashboard__nav-icon" />
                   {item.name}
                 </Link>
               </li>
             ))}
           </ul>
         </nav>
+      </AppSidebar>
 
-        <div className="sidebar__footer">
-          <button
-            className="theme-toggle"
-            onClick={toggleTheme}
-            aria-label="Переключить тему"
-          >
-            {theme === "dark" ? (
-              <Sun className="theme-toggle__icon" />
-            ) : (
-              <Moon className="theme-toggle__icon" />
-            )}
-          </button>
-        </div>
-      </aside>
-
-      {/* Overlay */}
-      {sidebarOpen && (
-        <div
-          className="overlay"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
-      {/* Main Content */}
-      <main className="main">
+      <main className="layout-dashboard__main">
         <Outlet />
       </main>
     </div>
