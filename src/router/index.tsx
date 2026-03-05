@@ -6,6 +6,8 @@ import { PageProduct } from "../pages/PageProduct";
 import { PageProducts } from "../pages/PageProducts";
 import { PageUser } from "../pages/PageUser";
 import { PageUsers } from "../pages/PageUsers";
+import { PageCart } from "../pages/PageCart";
+import { PageCarts } from "../pages/PageCarts";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +39,16 @@ export const router = createBrowserRouter([
           {
             path: ":id",
             Component: PageUser,
+          },
+        ],
+      },
+      {
+        path: "/carts",
+        children: [
+          { index: true, Component: PageCarts },
+          {
+            path: ":id",
+            Component: PageCart,
           },
         ],
       },

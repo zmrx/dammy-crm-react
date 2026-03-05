@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router";
-import { Package, Users, Home, Menu } from "lucide-react";
+import { Package, Users, Home, Menu, ShoppingCart } from "lucide-react";
 import "./Dashboard.css";
 import { AppSidebar } from "../components/AppSidebar";
 import { ThemeToggleButton } from "../components/ThemeToggleButton";
@@ -9,6 +9,7 @@ const navigation = [
   { name: "Главная", href: "/", icon: Home },
   { name: "Продукты", href: "/products", icon: Package },
   { name: "Пользователи", href: "/users", icon: Users },
+  { name: "Корзины", href: "/carts", icon: ShoppingCart },
 ];
 
 export const Dashboard = () => {
