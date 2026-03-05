@@ -56,3 +56,18 @@ export async function updateUser(id: number, data: Partial<User>): Promise<User>
   }
   return response.json();
 }
+
+export async function searchUsers(
+  query: string,
+  params?: Omit<UserQueryParams, "q">
+): Promise<UsersResponse> {
+  const searchParams: UserQueryParams = { q: query, ...params };
+  const queryString = buildUserQueryString(searchParams);
+  const url = `${BASE_URL}/search?${queryString}`;
+
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error("Failed to search users");
+  }
+  return response.json();
+}

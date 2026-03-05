@@ -24,7 +24,11 @@ export const AppSidebar = ({
     } else {
       document.body.style = "overflow:auto";
     }
-  }, [isOpen]);
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen, onClose]);
   return (
     <>
       <aside className={`sidebar ${isOpen ? "sidebar--open" : ""}`}>

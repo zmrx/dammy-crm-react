@@ -5,9 +5,10 @@ import { getUsers } from "../api";
 import type { User } from "../types";
 import { UITable, type SortConfig } from "../components/UITable";
 import { UIPagination } from "../components/UIPagination";
-import { UIInput } from "../components/UIInput";
 import { UIButton } from "../components/UIButton";
 import "./PageUsers.css";
+import { UIModal } from "../components/UIModal";
+import { UserFormSearch } from "../components/UserFormSearch";
 
 export const PageUsers = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -15,8 +16,6 @@ export const PageUsers = () => {
   const [skip, setSkip] = useState(0);
   const limit = 15;
 
-  const [search, setSearch] = useState("");
-  const [searchInput, setSearchInput] = useState("");
   const [loading, setLoading] = useState(true);
   const [sortConfig, setSortConfig] = useState<SortConfig | undefined>();
 
@@ -36,16 +35,11 @@ export const PageUsers = () => {
     } finally {
       setLoading(false);
     }
-  }, [skip, search, sortConfig]);
+  }, [skip, sortConfig]);
 
   useEffect(() => {
     fetchUsers();
   }, [fetchUsers]);
-
-  const handleSearch = () => {
-    setSkip(0);
-    setSearch(searchInput);
-  };
 
   const handleSort = (config: SortConfig) => {
     setSortConfig(config);
@@ -73,6 +67,8 @@ export const PageUsers = () => {
     },
   ];
 
+  const [userSearchIsOpen, setUserSearchIsOpen] = useState(false);
+
   return (
     <div className="page-users">
       <div className="page-users__header">
@@ -80,24 +76,23 @@ export const PageUsers = () => {
       </div>
 
       <div className="page-users__search-form">
-        <UIInput
-          placeholder="Поиск пользователей..."
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-        />
-
-        <UIButton
-          variant="primary"
-          onClick={handleSearch}
-        >
+        <UIButton variant="primary" onClick={() => setUserSearchIsOpen(true)}>
           <Search
             width={16}
             height={16}
             className="ui-button__icon"
           />
-          Найти
+          Поиск пользователя
         </UIButton>
+
+        <UIModal
+          isOpen={userSearchIsOpen}
+          onClose={() => setUserSearchIsOpen(false)}
+          title="Поиск пользователя"
+          bodyPadding={false}
+        >
+          <UserFormSearch />
+        </UIModal>
       </div>
 
       <UITable

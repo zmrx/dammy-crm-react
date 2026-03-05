@@ -1,6 +1,7 @@
 import { type ReactNode, useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import "./UIModal.css";
+import clsx from "clsx";
 
 interface ModalProps {
   isOpen: boolean;
@@ -8,9 +9,17 @@ interface ModalProps {
   title?: string;
   children: ReactNode;
   footer?: ReactNode;
+  bodyPadding?: boolean;
 }
 
-export function UIModal({ isOpen, onClose, title, children, footer }: ModalProps) {
+export function UIModal({
+  isOpen,
+  onClose,
+  title,
+  children,
+  footer,
+  bodyPadding = true,
+}: ModalProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -53,7 +62,9 @@ export function UIModal({ isOpen, onClose, title, children, footer }: ModalProps
           </button>
         </div>
 
-        <div className="ui-modal__body">{children}</div>
+        <div className={clsx({ "ui-modal__body": true, "ui-modal__body_padding": bodyPadding })}>
+          {children}
+        </div>
 
         {footer && <div className="ui-modal__footer">{footer}</div>}
       </div>

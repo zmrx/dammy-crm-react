@@ -60,8 +60,11 @@
 
 .ui-modal__body {
   flex: 1;
-  padding: var(--spacing-lg);
   overflow-y: auto;
+}
+
+.ui-modal__body_padding {
+  padding: var(--spacing-lg);
 }
 
 .ui-modal__footer {
