@@ -14,3 +14,9 @@ export interface UsersResponse {
   skip: number;
   limit: number;
 }
+
+export interface PaginatedResponse {
+  total: number;
+  skip: number;
+  limit: number;
+}
