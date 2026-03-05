@@ -5,22 +5,7 @@ import type { User } from "../types/User";
 import { UIInput } from "./UIInput";
 import { UserCard } from "./UserCard";
 import "./UserFormSearch.css";
-
-function useDebounce<T>(value: T, delay: number): T {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [value, delay]);
-
-  return debouncedValue;
-}
+import { useDebounce } from "../hooks/useDebounce";
 
 export const UserFormSearch = () => {
   const [query, setQuery] = useState("");

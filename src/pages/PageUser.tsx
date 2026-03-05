@@ -50,6 +50,7 @@ export const PageUser = () => {
         setLoading(false);
       }
     };
+
     fetchUser();
   }, [id]);
 
@@ -114,6 +115,7 @@ export const PageUser = () => {
           <UICardHeader>
             <UICardTitle>Основная информация</UICardTitle>
           </UICardHeader>
+
           <UICardContent>
             <UIPropertyList
               items={[
@@ -141,6 +143,7 @@ export const PageUser = () => {
           <UICardHeader>
             <UICardTitle>Контакты</UICardTitle>
           </UICardHeader>
+
           <UICardContent>
             <UIPropertyList
               items={[
@@ -157,6 +160,7 @@ export const PageUser = () => {
           <UICardHeader>
             <UICardTitle>Физические параметры</UICardTitle>
           </UICardHeader>
+
           <UICardContent>
             <UIPropertyList
               items={[
@@ -184,6 +188,7 @@ export const PageUser = () => {
           <UICardHeader>
             <UICardTitle>Адрес</UICardTitle>
           </UICardHeader>
+
           <UICardContent>
             <UIPropertyList
               items={[
@@ -208,6 +213,7 @@ export const PageUser = () => {
           <UICardHeader>
             <UICardTitle>Образование</UICardTitle>
           </UICardHeader>
+
           <UICardContent>
             <UIPropertyList items={[{ label: "Университет", value: user.university }]} />
           </UICardContent>
@@ -217,6 +223,7 @@ export const PageUser = () => {
           <UICardHeader>
             <UICardTitle>Работа</UICardTitle>
           </UICardHeader>
+
           <UICardContent>
             <UIPropertyList
               items={[
@@ -250,6 +257,7 @@ export const PageUser = () => {
           <UICardHeader>
             <UICardTitle>Криптовалюта</UICardTitle>
           </UICardHeader>
+
           <UICardContent>
             <UIPropertyList
               items={[
@@ -274,7 +282,6 @@ export const PageUser = () => {
         </UICard>
       </UICardsGrid>
 
-      {/* Edit Modal */}
       <UIModal
         isOpen={editModalOpen}
         onClose={() => setEditModalOpen(false)}

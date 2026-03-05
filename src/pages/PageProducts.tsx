@@ -5,8 +5,9 @@ import { getProducts } from "../api";
 import type { Product } from "../types";
 import { UITable, type SortConfig } from "../components/UITable";
 import { UIPagination } from "../components/UIPagination";
-import { UIInput } from "../components/UIInput";
 import { UIButton } from "../components/UIButton";
+import { UIModal } from "../components/UIModal";
+import { ProductFormSearch } from "../components/ProductFormSearch";
 import "./PageProducts.css";
 
 export const PageProducts = () => {
@@ -15,8 +16,6 @@ export const PageProducts = () => {
   const [skip, setSkip] = useState(0);
   const limit = 15;
 
-  const [search, setSearch] = useState("");
-  const [searchInput, setSearchInput] = useState("");
   const [loading, setLoading] = useState(true);
   const [sortConfig, setSortConfig] = useState<SortConfig | undefined>();
 
@@ -36,21 +35,18 @@ export const PageProducts = () => {
     } finally {
       setLoading(false);
     }
-  }, [skip, search, sortConfig]);
+  }, [skip, sortConfig]);
 
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
 
-  const handleSearch = () => {
-    setSkip(0);
-    setSearch(searchInput);
-  };
-
   const handleSort = (config: SortConfig) => {
     setSortConfig(config);
     setSkip(0);
   };
+
+  const [productSearchIsOpen, setProductSearchIsOpen] = useState(false);
 
   const columns = [
     {
@@ -97,24 +93,23 @@ export const PageProducts = () => {
       </div>
 
       <div className="page-products__search-form">
-        <UIInput
-          placeholder="Поиск продуктов..."
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-        />
-
-        <UIButton
-          variant="primary"
-          onClick={handleSearch}
-        >
+        <UIButton variant="primary" onClick={() => setProductSearchIsOpen(true)}>
           <Search
             width={16}
             height={16}
             className="ui-button__icon"
           />
-          Найти
+          Поиск продукта
         </UIButton>
+
+        <UIModal
+          isOpen={productSearchIsOpen}
+          onClose={() => setProductSearchIsOpen(false)}
+          title="Поиск продукта"
+          bodyPadding={false}
+        >
+          <ProductFormSearch />
+        </UIModal>
       </div>
 
       <UITable
