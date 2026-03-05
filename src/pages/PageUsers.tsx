@@ -55,7 +55,7 @@ export const PageUsers = () => {
     },
     {
       key: "username",
-      header: "Username",
+      header: "Имя пользователя",
       sortable: true,
       render: (user: User) => <Link to={`/users/${user.id}`}>{user.username}</Link>,
     },
