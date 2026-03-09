@@ -4,7 +4,7 @@ import { UIFormGrid } from "./UIFormGrid";
 import { UIInput } from "./UIInput";
 import { UISpinner } from "./UISpinner";
 import { useState, type SubmitEvent } from "react";
-import type { Cart, CartProduct } from "../types";
+import type { Cart } from "../types";
 import { updateCart } from "../api/carts";
 import { UIInputLabel } from "../components/UIInputLabel";
 import "./CartFormEdit.css";

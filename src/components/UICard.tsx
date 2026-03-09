@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
 import "./UICard.css";
+import clsx from "clsx";
 
 interface CardProps {
   children: ReactNode;
@@ -7,7 +8,7 @@ interface CardProps {
 }
 
 export function UICard({ children, className = "" }: CardProps) {
-  return <div className={`ui-card ${className}`}>{children}</div>;
+  return <div className={clsx("ui-card", className)}>{children}</div>;
 }
 
 interface CardHeaderProps {

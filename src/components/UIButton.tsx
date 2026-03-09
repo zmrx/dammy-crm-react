@@ -1,5 +1,6 @@
 import { type ReactNode, type ButtonHTMLAttributes } from "react";
 import "./UIButton.css";
+import { clsx } from "clsx";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "outline" | "ghost";
@@ -13,22 +14,16 @@ export const UIButton = ({
   className = "",
   children,
   ...props
-}: ButtonProps) => {
-  const classes = [
-    "ui-button",
-    variant !== "primary" && `ui-button--${variant}`,
-    size !== "default" && `ui-button--${size}`,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
-  return (
-    <button
-      className={classes}
-      {...props}
-    >
-      {children}
-    </button>
-  );
-};
+}: ButtonProps) => (
+  <button
+    className={clsx([
+      "ui-button",
+      variant !== "primary" && `ui-button--${variant}`,
+      size !== "default" && `ui-button--${size}`,
+      className,
+    ])}
+    {...props}
+  >
+    {children}
+  </button>
+);

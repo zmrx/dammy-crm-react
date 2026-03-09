@@ -1,0 +1,61 @@
+.widget-product-low-rated__card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+}
+
+.widget-product-low-rated__rank {
+  font-size: 16px;
+  font-weight: 700;
+  color: #dc3545;
+  min-width: 24px;
+}
+
+.widget-product-low-rated__image {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.widget-product-low-rated__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.widget-product-low-rated__title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary, #333);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.widget-product-low-rated__category {
+  font-size: 12px;
+  color: var(--color-text-secondary, #666);
+}
+
+.widget-product-low-rated__rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  padding: 0.5rem;
+}
+
+.widget-product-low-rated__rating-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #dc3545;
+}
+
+.widget-product-low-rated__rating-stars {
+  font-size: 16px;
+  color: #dc3545;
+}

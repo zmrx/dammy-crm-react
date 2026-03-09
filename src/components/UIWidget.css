@@ -1,0 +1,36 @@
+.ui-widget__loading,
+.ui-widget__error,
+.ui-widget__empty {
+  text-align: center;
+  padding: 20px;
+  color: var(--color-text-secondary, #666);
+  font-size: 14px;
+}
+
+.ui-widget__error {
+  color: #dc3545;
+}
+
+.ui-widget__empty {
+  color: #28a745;
+}
+
+.ui-widget__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ui-widget__item {
+  border-radius: 0.25rem;
+  color: inherit;
+  transition: background-color 0.2s;
+}
+
+.ui-widget__item:hover {
+  background-color: var(--color-bg-secondary, #f5f5f5);
+}

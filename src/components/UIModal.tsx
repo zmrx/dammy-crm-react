@@ -62,7 +62,12 @@ export function UIModal({
           </button>
         </div>
 
-        <div className={clsx({ "ui-modal__body": true, "ui-modal__body_padding": bodyPadding })}>
+        <div
+          className={clsx({
+            "ui-modal__body": true,
+            "ui-modal__body_padding": bodyPadding,
+          })}
+        >
           {children}
         </div>
 

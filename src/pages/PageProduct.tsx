@@ -252,16 +252,18 @@ export function PageProduct() {
         }
       >
         <UIFormGrid columns={2}>
-          <UIInput
-            label="Название"
-            value={editData.title || ""}
-            onChange={(e) => setEditData({ ...editData, title: e.target.value })}
-          />
-          <UIInput
-            label="Категория"
-            value={editData.category || ""}
-            onChange={(e) => setEditData({ ...editData, category: e.target.value })}
-          />
+          <UIInputLabel label="Название">
+            <UIInput
+              value={editData.title || ""}
+              onChange={(e) => setEditData({ ...editData, title: e.target.value })}
+            />
+          </UIInputLabel>
+          <UIInputLabel label="Категория">
+            <UIInput
+              value={editData.category || ""}
+              onChange={(e) => setEditData({ ...editData, category: e.target.value })}
+            />
+          </UIInputLabel>
         </UIFormGrid>
         <UIInputLabel label="Описание">
           <UITextarea
@@ -271,57 +273,65 @@ export function PageProduct() {
           />
         </UIInputLabel>
         <UIFormGrid columns={3}>
-          <UIInput
-            label="Цена"
-            type="number"
-            value={editData.price || ""}
-            onChange={(e) => setEditData({ ...editData, price: Number(e.target.value) })}
-          />
-          <UIInput
-            label="Скидка %"
-            type="number"
-            value={editData.discountPercentage || ""}
-            onChange={(e) =>
-              setEditData({
-                ...editData,
-                discountPercentage: Number(e.target.value),
-              })
-            }
-          />
-          <UIInput
-            label="Остаток"
-            type="number"
-            value={editData.stock || ""}
-            onChange={(e) => setEditData({ ...editData, stock: Number(e.target.value) })}
-          />
+          <UIInputLabel label="Цена">
+            <UIInput
+              type="number"
+              value={editData.price || ""}
+              onChange={(e) => setEditData({ ...editData, price: Number(e.target.value) })}
+            />
+          </UIInputLabel>
+          <UIInputLabel label="Скидка %">
+            <UIInput
+              type="number"
+              value={editData.discountPercentage || ""}
+              onChange={(e) =>
+                setEditData({
+                  ...editData,
+                  discountPercentage: Number(e.target.value),
+                })
+              }
+            />
+          </UIInputLabel>
+          <UIInputLabel label="Остаток">
+            <UIInput
+              type="number"
+              value={editData.stock || ""}
+              onChange={(e) => setEditData({ ...editData, stock: Number(e.target.value) })}
+            />
+          </UIInputLabel>
         </UIFormGrid>
         <UIFormGrid columns={2}>
-          <UIInput
-            label="Бренд"
-            value={editData.brand || ""}
-            onChange={(e) => setEditData({ ...editData, brand: e.target.value })}
-          />
-          <UIInput
-            label="SKU"
-            value={editData.sku || ""}
-            onChange={(e) => setEditData({ ...editData, sku: e.target.value })}
-          />
+          <UIInputLabel label="Бренд">
+            <UIInput
+              value={editData.brand || ""}
+              onChange={(e) => setEditData({ ...editData, brand: e.target.value })}
+            />
+          </UIInputLabel>
+          <UIInputLabel label="SKU">
+            <UIInput
+              value={editData.sku || ""}
+              onChange={(e) => setEditData({ ...editData, sku: e.target.value })}
+            />
+          </UIInputLabel>
         </UIFormGrid>
-        <UIInput
-          label="Гарантия"
-          value={editData.warrantyInformation || ""}
-          onChange={(e) => setEditData({ ...editData, warrantyInformation: e.target.value })}
-        />
-        <UIInput
-          label="Доставка"
-          value={editData.shippingInformation || ""}
-          onChange={(e) => setEditData({ ...editData, shippingInformation: e.target.value })}
-        />
-        <UIInput
-          label="Политика возврата"
-          value={editData.returnPolicy || ""}
-          onChange={(e) => setEditData({ ...editData, returnPolicy: e.target.value })}
-        />
+        <UIInputLabel label="Гарантия">
+          <UIInput
+            value={editData.warrantyInformation || ""}
+            onChange={(e) => setEditData({ ...editData, warrantyInformation: e.target.value })}
+          />
+        </UIInputLabel>
+        <UIInputLabel label="Доставка">
+          <UIInput
+            value={editData.shippingInformation || ""}
+            onChange={(e) => setEditData({ ...editData, shippingInformation: e.target.value })}
+          />
+        </UIInputLabel>
+        <UIInputLabel label="Политика возврата">
+          <UIInput
+            value={editData.returnPolicy || ""}
+            onChange={(e) => setEditData({ ...editData, returnPolicy: e.target.value })}
+          />
+        </UIInputLabel>
       </UIModal>
     </div>
   );

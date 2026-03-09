@@ -1,0 +1,21 @@
+.widget-cart-recent__cart {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+}
+
+.widget-cart-recent__id {
+  font-weight: 600;
+  color: var(--color-text-primary, #333);
+}
+
+.widget-cart-recent__user {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary, #666);
+}
+
+.widget-cart-recent__total {
+  font-weight: 600;
+}

@@ -1,0 +1,8 @@
+.UILink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.UILink:hover {
+  text-decoration: none;
+}
